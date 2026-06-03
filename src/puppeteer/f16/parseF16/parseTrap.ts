@@ -1,10 +1,10 @@
+import { ReportF16T } from '../../../utils/types/f16';
 import { groupify } from '../../../utils/groupify';
-import { SSDReportT } from './parseInfo';
 
 const initTrap = (code: string) => ({ amount: 0, amountStr: '0', desc: code });
 type TrapT = ReturnType<typeof initTrap>;
 
-export const parseTrap = (json: SSDReportT) => {
+export const parseTrap = (json: ReportF16T) => {
     const t = json.Subreport6[0].Report[0].Tablix8[0];
     if (!t || typeof t === 'string') return null;
 

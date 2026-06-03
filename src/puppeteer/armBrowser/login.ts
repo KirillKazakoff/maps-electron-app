@@ -1,4 +1,4 @@
-import { SettingsT } from '../../utils/types';
+import { SettingsT } from '../../utils/types/types';
 import { bot } from '../../bot/bot';
 import { timePromise } from '../../utils/time';
 import { browser } from '../browser';

@@ -1,8 +1,8 @@
+import { SSDT } from '../../utils/types/f16';
 import { bot } from '../../bot/bot';
-import { ParsedSSDT } from './parseF16/parseF16';
 import { vessels } from '../fsModule/readConfig';
 
-export const sendF16InfoBot = (f16Array: ParsedSSDT[][], isTransport?: boolean) => {
+export const sendF16InfoBot = (f16Array: SSDT[][], isTransport?: boolean) => {
     const lastSSD = f16Array.map((f16) => f16[f16.length - 1]);
     const sortedSSD = lastSSD
         .sort((prev, next) => {

@@ -1,14 +1,12 @@
-import { ReportT } from './parseF16';
 import { parseStatus } from './parseStatus';
 import { parseTrap } from './parseTrap';
 import { DateTime } from 'luxon';
+import { ReportF16T } from '../../../utils/types/f16';
 
 // eslint-disable-next-line no-useless-escape
 const rgBracket = /[\(\)]/;
-export type SSDReportT =
-    ReportT['Report']['Tablix1'][0]['SSD_DATE_Collection'][0]['SSD_DATE'][0];
 
-export const parseInfo = (json: SSDReportT) => {
+export const parseInfo = (json: ReportF16T) => {
     const title = json.Textbox33[0];
     const titleSpaced = title.split(' ');
     const agreementNoSpaced = titleSpaced[titleSpaced.indexOf('№') + 1].split('\r\n');

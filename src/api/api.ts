@@ -2,13 +2,21 @@ import { Coordinates, Vessel } from './models';
 import { ParsedSSDT } from '../puppeteer/f16/parseF16/parseF16';
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:9092';
+const baseUrl = 'http://127.0.0.1:9092';
 
 const updateZones = async (data: unknown) => {
     await axios.post(`${baseUrl}/zones`, data);
 };
-const sendSSDInfo = async (data: ParsedSSDT) => {
-    await axios.post(`${baseUrl}/ssd`, data);
+const ping = async () => {
+    const res = await axios.get(`${baseUrl}/ping`);
+    return res;
+};
+const sendSSDInfo = async (data: ParsedSSDT[][]) => {
+    try {
+        await axios.post(`${baseUrl}/ssd`, data);
+    } catch (e) {
+        console.log(e.message);
+    }
 };
 const sendCoordinates = async (data: Coordinates[]) => {
     await axios.post(`${baseUrl}/coordinates`, data);
@@ -22,6 +30,10 @@ const getVesselsByCompanyId = async (companyId: string) => {
     return res.data.map((vessel) => vessel.id);
 };
 
+const sendDebugBackedn = (param: string) => {
+    axios.post(`${baseUrl}/debug`, param);
+};
+
 export const api = {
     update: {
         zones: updateZones,
@@ -29,9 +41,11 @@ export const api = {
     send: {
         ssdInfo: sendSSDInfo,
         coordinates: sendCoordinates,
+        debugBackedn: sendDebugBackedn,
     },
     get: {
         vesselsByCompany: getVesselsByCompanyId,
         vessel: getVesselById,
+        ping,
     },
 };

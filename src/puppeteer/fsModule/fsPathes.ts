@@ -19,9 +19,10 @@ export const getDirPathes = () => {
         powershell: powershellDir,
         downloads: downloadDir,
         downloadsSSD: downloadDir + '\\SSD\\',
+        debugSSD: downloadDir + '\\Отладка\\Debug DB SSD\\',
         ssd: cloudDir + '\\SSD\\',
-        quotes: mainDir + '\\КВОТЫ ССД\\Квоты РФ',
-        quotesFormDate: mainDir + '\\КВОТЫ ССД\\Квоты РФ Выгрузка',
+        quotes: mainDir + '\\КВОТЫ ССД\\Квоты РФ\\',
+        quotesFormDate: mainDir + '\\КВОТЫ ССД\\Квоты РФ Выгрузка\\',
         f19: mainDir + '\\ДВ БД\\Выгрузки\\Вылов (форма Ф19)\\',
     };
 };

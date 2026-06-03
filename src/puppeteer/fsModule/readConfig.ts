@@ -1,5 +1,5 @@
 import { configUrl } from './fsPathes';
-import { ConfigT, SettingsT, VesselsT } from '../../utils/types';
+import { ConfigT, SettingsT, VesselsT } from '../../utils/types/types';
 import fs from 'fs';
 
 export let vessels: VesselsT;

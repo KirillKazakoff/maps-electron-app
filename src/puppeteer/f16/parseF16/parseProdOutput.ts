@@ -1,4 +1,4 @@
-import { SSDReportT } from './parseInfo';
+import { ReportF16T } from '../../../utils/types/f16';
 
 export type ProductionOutputT = {
     name: string;
@@ -52,7 +52,7 @@ const parseTable = (table: string | { [key: string]: string[] }[]) => {
     }, []);
 };
 
-export const parseProdOutput = (ssdJson: SSDReportT) => {
+export const parseProdOutput = (ssdJson: ReportF16T) => {
     const detailsCurrentCollection = ssdJson.Tablix9[0]?.Details7_Collection[0];
     const detailsTotal = ssdJson.Tablix11[0].Details9_Collection[0].Details9;
 

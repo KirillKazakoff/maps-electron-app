@@ -1,11 +1,11 @@
-import { SSDReportT } from './parseInfo';
+import { ReportF16T } from '../../../utils/types/f16';
 
 export type ProductionInputT = {
     name: string;
     total: number;
 };
 
-export const parseProdInput = (ssdJson: SSDReportT) => {
+export const parseProdInput = (ssdJson: ReportF16T) => {
     try {
         if (!ssdJson.Subreport1) return [];
 

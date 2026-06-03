@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
 import { getDirPathes } from '../fsModule/fsPathes';
 import fs from 'fs';
-import { ParsedSSDT } from './parseF16/parseF16';
+import { SSDT } from '../../utils/types/f16';
 
-export const moveF16Cloud = (ssdList: ParsedSSDT[], oldPath: string) => {
+export const moveF16Cloud = (ssdList: SSDT[], oldPath: string) => {
     console.log(ssdList[0]);
 
     const pathes = getDirPathes();

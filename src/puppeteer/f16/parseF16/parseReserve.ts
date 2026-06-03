@@ -1,7 +1,7 @@
+import { ReportF16T } from '../../../utils/types/f16';
 import { Reserve } from '../../../api/models';
-import { SSDReportT } from './parseInfo';
 
-export const parseReserve = (id_ssd: string, ssdJson: SSDReportT) => {
+export const parseReserve = (id_ssd: string, ssdJson: ReportF16T) => {
     const reserveJson = ssdJson.Tablix7[0].Details5_Collection[0].Details5;
     const reserve = reserveJson.reduce<Reserve>(
         (total, reserveType) => {

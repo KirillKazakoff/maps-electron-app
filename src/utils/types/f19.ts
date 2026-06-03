@@ -1,0 +1,29 @@
+// F19
+export type F19T = {
+    Report: Report;
+};
+type Report = {
+    Tablix1: Tablix1[];
+};
+type Tablix1 = {
+    Details_Collection: DetailsCollection[];
+};
+type DetailsCollection = {
+    Details: DetailsF19[];
+};
+type DetailsF19 = {
+    VES2: string[];
+    OWN: string;
+    date_val: string;
+    CATCH_VOLUME: string;
+    PROD_INFO?: string;
+    TYPE_VES?: string;
+    REGIME?: string;
+    PERMIT?: string;
+    OWNQUOTE?: string;
+    REGION1?: string;
+    FISH?: string[];
+    PROD_BOARD_INFO?: string;
+    SUBJECT_RF2?: string;
+    SUBJECT_RF_QOUTE?: string;
+};

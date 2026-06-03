@@ -32,7 +32,7 @@ export const createWindow = (): void => {
     // addMailListener();
     // botMail();
 
-    setTimeout(() => mainWindow.showInactive(), 2500);
+    // setTimeout(() => mainWindow.showInactive(), 2500);
     mainWindow.webContents.openDevTools();
 };
 

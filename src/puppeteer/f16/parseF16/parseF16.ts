@@ -1,24 +1,10 @@
-import reportJson from '../../../filesDebug/reportNew.json';
-import { parseInfo, SSDInfoT } from './parseInfo';
-import { parseProdOutput, ProductionOutputT } from './parseProdOutput';
-import { parseProdInput, ProductionInputT } from './parseProdInput';
+import { parseInfo } from './parseInfo';
+import { parseProdOutput } from './parseProdOutput';
+import { parseProdInput } from './parseProdInput';
 import { modifyCoefficientSpecial } from './modifyCoefficientRoe';
+import { F16T, SSDT } from '../../../utils/types/f16';
 
-export type ReportT = typeof reportJson;
-
-export type ParsedSSDT = {
-    info: SSDInfoT;
-    production: {
-        input: ProductionInputT[];
-        output: {
-            current: ProductionOutputT[];
-            board: ProductionOutputT[];
-        };
-    };
-    type?: string;
-};
-
-export const parseF16 = (report: ReportT) => {
+export const parseF16 = (report: F16T) => {
     // check if empty report; destructure variable
     if (!report?.Report?.Tablix1) return null;
     const { SSD_DATE_Collection } = report.Report.Tablix1[0];
@@ -27,7 +13,7 @@ export const parseF16 = (report: ReportT) => {
     const { SSD_DATE } = SSD_DATE_Collection[0];
 
     // reduce and parse report
-    const parsedSSD = SSD_DATE.reduce<ParsedSSDT[]>((total, json) => {
+    const parsedSSD = SSD_DATE.reduce<SSDT[]>((total, json) => {
         const output = parseProdOutput(json);
         const input = parseProdInput(json);
         modifyCoefficientSpecial({ input, output: output.current });
@@ -41,4 +27,3 @@ export const parseF16 = (report: ReportT) => {
 
     return parsedSSD;
 };
-11111;

@@ -1,5 +1,4 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { CheckBoxSettingsT } from './utils/types';
 import { FormDateT } from './UI/stores/settingsStore';
 
 const electronApi = {
@@ -12,8 +11,10 @@ const electronApi = {
 
         // F16
         sendF16: (date: FormDateT) => ipcRenderer.send('sendF16', date),
-        sendXMLF16: () => ipcRenderer.send('sendXMLF16'),
+        sendF16XML: () => ipcRenderer.send('sendF16XML'),
         sendF16Company: () => ipcRenderer.send('sendF16Company'),
+        sendF16Backend: () => ipcRenderer.send('sendF16Backend'),
+        sendBackendDebug: () => ipcRenderer.send('sendBackendDebug'),
 
         //F10
         sendF10: () => ipcRenderer.send('sendF10'),

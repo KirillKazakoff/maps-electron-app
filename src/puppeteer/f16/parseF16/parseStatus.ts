@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
-import { SSDReportT } from './parseInfo';
+import { ReportF16T } from '../../../utils/types/f16';
 
-export const parseStatus = (json: SSDReportT) => {
+export const parseStatus = (json: ReportF16T) => {
     const table = json.Tablix5[0].Details3_Collection[0].Details3;
     const title = json.Textbox33[0];
     const titleSpaced = title.split(' ');

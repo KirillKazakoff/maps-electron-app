@@ -1,7 +1,7 @@
+import { ReportF16T } from '../../../utils/types/f16';
 import { Bait } from '../../../api/models';
-import { SSDReportT } from './parseInfo';
 
-export const parseBait = (id_ssd: string, ssdJson: SSDReportT) => {
+export const parseBait = (id_ssd: string, ssdJson: ReportF16T) => {
     const detailsTotalJson = ssdJson.Tablix11[0].Details9_Collection[0].Details9;
     if (!detailsTotalJson) return [];
 

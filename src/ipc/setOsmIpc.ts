@@ -12,6 +12,7 @@ import { operateF19 } from '../puppeteer/f19/operateF19';
 import { readConfig, vessels } from '../puppeteer/fsModule/readConfig';
 import nodeCron from 'node-cron';
 import type { PowerIpcT } from './setPowerAUIpc';
+import { api } from '../api/api';
 
 export const setOsmIpc = (powerIpc: PowerIpcT) => {
     // F19
@@ -49,12 +50,20 @@ export const setOsmIpc = (powerIpc: PowerIpcT) => {
         readConfig();
         downloadF16Report(date, [...vessels.main, ...vessels.special]);
     });
-    ipcMain.on('sendXMLF16', () => {
+    ipcMain.on('sendF16XML', () => {
         readConfig();
         const f16Data = moveF16();
         sendF16InfoBot(f16Data);
     });
-
+    ipcMain.on('sendF16Backend', async () => {
+        readConfig();
+        const f16Data = moveF16('debug');
+        api.send.ssdInfo(f16Data);
+    });
+    ipcMain.on('sendBackendDebug', async () => {
+        readConfig();
+        api.send.debugBackedn('vessel');
+    });
     // F10
     ipcMain.on('sendF10', () => {
         readConfig();
