@@ -1,6 +1,7 @@
 import { ReportF16T } from '../../../utils/types/f16';
 
 export type ProductionOutputT = {
+    idProduct: number;
     name: string;
     total: number;
     sort: string;
@@ -31,16 +32,18 @@ const parseTable = (table: string | { [key: string]: string[] }[]) => {
         const resArr = Object.values(details).map((detail) => detail[0]);
 
         const [name, id, value, suffix, type] = resArr;
+        const parsedID = +id.split(/[()]/)[1];
 
         if (!type.includes('вып. из собственного сырья')) return total;
 
         const nameArr = name.split(' ');
-        let sort = nameArr.pop();
+        let sort = nameArr[nameArr.length - 1];
         if (!sort) sort = '';
 
         const nameParsed = nameArr.join(' ');
 
         const obj: ProductionOutputT = {
+            idProduct: parsedID,
             name: prodNameReplace(nameParsed),
             total: +value,
             sort,

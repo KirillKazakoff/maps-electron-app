@@ -7,6 +7,7 @@ export type F16T = typeof reportJson;
 export type ReportF16T = F16T['Report']['Tablix1'][0]['SSD_DATE_Collection'][0]['SSD_DATE'][0];
 
 export type SSDT = {
+    filePath: string;
     info: SSDInfoT;
     production: {
         input: ProductionInputT[];
@@ -14,6 +15,7 @@ export type SSDT = {
             current: ProductionOutputT[];
             board: ProductionOutputT[];
         };
+        isLive: boolean;
     };
     type?: string;
 };

@@ -17,8 +17,9 @@ export const parseStatus = (json: ReportF16T) => {
     const status = {
         main: 'НЕИЗВЕСТЕН',
         place: '',
+        placeId: 0,
         event: <EventT[]>[],
-        destination: { eta: '', place: '' },
+        destination: { eta: '', place: '', placeId: 0 },
     };
 
     // parse status
@@ -28,18 +29,23 @@ export const parseStatus = (json: ReportF16T) => {
     if (statusToken === 'порту') {
         status.main = 'В ПОРТУ';
     }
+
+    if (destinationReg.length > 1) {
+        status.destination.placeId = +destinationReg[2].split('-')[1].trim();
+
+        status.destination.place = destinationReg[3];
+        status.destination.eta = destinationReg[5];
+    }
     // with destination point statuses
     if (statusToken === 'промысел') {
         status.main = 'СЛЕДУЕТ НА ПРОМЫСЕЛ';
-        status.destination.place = destinationReg[3];
-        status.destination.eta = destinationReg[5];
     }
     if (statusToken === 'порт') {
         status.main = 'СЛЕДУЕТ В ПОРТ';
-        status.destination.place = destinationReg[3];
-        status.destination.eta = destinationReg[5];
     }
+
     status.place = title.split(' - ')[1].split('°')[0];
+    status.placeId = +title.split(' - ')[0].split(/\r\n/).pop();
 
     // parse meteo in tablix5
     const tokens = {

@@ -1,6 +1,6 @@
 import { Coordinates, Vessel } from './models';
-import { ParsedSSDT } from '../puppeteer/f16/parseF16/parseF16';
 import axios from 'axios';
+import { SSDT } from '../utils/types/f16';
 
 const baseUrl = 'http://127.0.0.1:9092';
 
@@ -11,7 +11,7 @@ const ping = async () => {
     const res = await axios.get(`${baseUrl}/ping`);
     return res;
 };
-const sendSSDInfo = async (data: ParsedSSDT[][]) => {
+const sendSSDInfo = async (data: SSDT[][]) => {
     try {
         await axios.post(`${baseUrl}/ssd`, data);
     } catch (e) {

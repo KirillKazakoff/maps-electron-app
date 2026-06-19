@@ -12,6 +12,8 @@ export const parseInfo = (json: ReportF16T) => {
     const agreementNoSpaced = titleSpaced[titleSpaced.indexOf('№') + 1].split('\r\n');
     const date = titleSpaced[0];
 
+    const coordinates = title.match(/(?<=\s)[^\s]+\s+[^\s]+(?= {2})/);
+
     const dateYesterday = DateTime.now().minus({ day: 1 }).toFormat('dd.MM.yyyy');
     const vessel_id = title.split(rgBracket)[1];
 
@@ -25,6 +27,7 @@ export const parseInfo = (json: ReportF16T) => {
         trapData: parseTrap(json),
         isOutdated: dateYesterday !== date,
         status: parseStatus(json),
+        coordinates,
         vessel_id,
         date,
     };

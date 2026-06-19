@@ -5,13 +5,18 @@ type SettingsT = { input: ProductionInputT[]; output: ProductionOutputT[] };
 
 export const modifyCoefficientSpecial = ({ input, output }: SettingsT) => {
     output.forEach((o) => {
-        const isSpecial = o.name.includes('икра') || o.name.includes('молоки');
+        const isRoeMilts = o.name.includes('икра') || o.name.includes('молоки');
+        const isLive = o.name.includes('жив');
 
-        if (isSpecial) {
+        if (isRoeMilts) {
             const pollock = input.find((i) => i.name.includes('минтай'));
             if (!pollock) return;
-            console.log(pollock.total);
+            // console.log(pollock.total);
             o.coefficient = +((o.total / pollock.total) * 100).toFixed(2);
+        }
+
+        if (isLive) {
+            o.coefficient = 1;
         }
     });
 };

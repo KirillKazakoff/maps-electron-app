@@ -2,15 +2,14 @@ import { browser } from '../browser';
 import { FormDateT } from '../../UI/stores/settingsStore';
 import { downloadFile } from '../armBrowser/downloadFile/downloadFile';
 import { login } from '../armBrowser/login';
-import { moveF16 } from './moveF16';
+import { parseF16List } from './parseF16/parseF16List';
 import { bot } from '../../bot/bot';
 import { settings } from '../fsModule/readConfig';
-import { ParsedSSDT } from './parseF16/parseF16';
+import { moveF16Cloud } from './moveF16Cloud';
 
 export const downloadF16Report = async (date: FormDateT, vesselsArray: string[]) => {
     // remove dublicates
     let vessels = Array.from(new Set(vesselsArray));
-    const f16Data: ParsedSSDT[][] = [];
 
     const recurseLoad = async () => {
         const timers: NodeJS.Timeout[] = [];
@@ -44,14 +43,14 @@ export const downloadF16Report = async (date: FormDateT, vesselsArray: string[])
         }
 
         await browser.clear(timers, false);
-
-        // reduce ssd all together
-        const f16DataPart = moveF16();
-        f16Data.push(...f16DataPart);
     };
 
     await recurseLoad();
 
+    const f16List = parseF16List('downloadsSSD');
+    moveF16Cloud(f16List);
+
     bot.log.bot('SSD F16 uploaded successfuly');
-    return f16Data;
+
+    return f16List;
 };

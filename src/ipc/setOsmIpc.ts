@@ -5,7 +5,7 @@ import { calcARMDateFromNow, calcARMDateNow } from '../utils/date';
 import { timePromise } from '../utils/time';
 import { downloadF10Report } from '../puppeteer/f10/downloadF10Report';
 import { downloadF16Report } from '../puppeteer/f16/downloadF16Report';
-import { moveF16 } from '../puppeteer/f16/moveF16';
+import { parseF16List } from '../puppeteer/f16/parseF16/parseF16List';
 import { sendF16InfoBot } from '../puppeteer/f16/sendF16InfoBot';
 import { downloadF19Report } from '../puppeteer/f19/downloadF19Report';
 import { operateF19 } from '../puppeteer/f19/operateF19';
@@ -13,6 +13,7 @@ import { readConfig, vessels } from '../puppeteer/fsModule/readConfig';
 import nodeCron from 'node-cron';
 import type { PowerIpcT } from './setPowerAUIpc';
 import { api } from '../api/api';
+import { archiveToDB } from '../puppeteer/f16/archiveToDB';
 
 export const setOsmIpc = (powerIpc: PowerIpcT) => {
     // F19
@@ -52,12 +53,13 @@ export const setOsmIpc = (powerIpc: PowerIpcT) => {
     });
     ipcMain.on('sendF16XML', () => {
         readConfig();
-        const f16Data = moveF16();
+        const f16Data = parseF16List('debugSSD');
         sendF16InfoBot(f16Data);
     });
     ipcMain.on('sendF16Backend', async () => {
         readConfig();
-        const f16Data = moveF16('debug');
+        const f16Data = archiveToDB();
+        // const f16Data = parseF16List('debugSSD');
         api.send.ssdInfo(f16Data);
     });
     ipcMain.on('sendBackendDebug', async () => {
