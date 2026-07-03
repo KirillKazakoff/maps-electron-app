@@ -1,5 +1,5 @@
-import puppeteer from 'puppeteer-extra';
-import { Browser } from 'puppeteer';
+/* eslint-disable import/no-named-as-default-member */
+import puppeteer, { Browser } from 'puppeteer';
 import { timePromise } from '../utils/time';
 import { bot } from '../bot/bot';
 
@@ -8,29 +8,30 @@ class BrowserC {
     errorTimes = 0;
 
     async launch() {
+        if (this.instance) {
+            await this.instance.close();
+            this.instance = null as any;
+        }
+
         this.instance = await puppeteer.launch({
             devtools: true,
             headless: false,
         });
 
         // close browser window in any case in 90 minutes
-        setTimeout(
-            () => {
-                if (!this.instance) return;
-
-                try {
-                    this.instance.close();
-                } catch (e) {
-                    return;
-                }
-            },
-            1000 * 60 * 90
-        );
+        // setTimeout(
+        //     async () => {
+        //         if (!this.instance) return;
+        //         await this.close();
+        //     },
+        //     1000 * 60 * 90
+        // );
     }
 
     async close() {
         if (!this.instance) return;
         await this.instance.close();
+        this.instance = null as any;
     }
 
     async clear(timers: NodeJS.Timer[] | null, isError: boolean) {

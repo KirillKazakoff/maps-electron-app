@@ -1,10 +1,10 @@
 import xml2js from 'xml2js';
 import { getDirPathes } from '../fsModule/fsPathes';
 import fs from 'fs';
-import { F19T } from '../../utils/types/types';
 import { vessels, rewriteConfig } from '../fsModule/readConfig';
 import { bot } from '../../bot/bot';
 import { getDateF19Report } from '../../utils/date';
+import { F19T } from '../../utils/types/f19';
 
 const xmlPathes = getDirPathes();
 

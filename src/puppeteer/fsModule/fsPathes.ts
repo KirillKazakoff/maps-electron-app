@@ -1,9 +1,8 @@
-// import { bot } from '../../bot/bot';
-
-// RRR
 const username = __dirname.split(/[/\\]/)[2];
 const isAdmin = username === 'admin';
-const mainDir = isAdmin ? `C:\\Users\\admin\\Dropbox\\Семейная папка\\` : '\\\\Mac\\iCloud\\';
+const mainDir = isAdmin
+    ? `C:\\Users\\admin\\Dropbox\\Семейная папка\\БД\\`
+    : '\\\\Mac\\iCloud\\';
 const serverPath = isAdmin ? 'C:\\Users\\admin' : 'C:\\users\\kirillkazakov';
 
 const downloadDir = isAdmin ? `${serverPath}\\Downloads` : `\\\\Mac\\Home\\Downloads`;

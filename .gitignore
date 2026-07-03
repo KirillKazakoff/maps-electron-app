@@ -98,6 +98,8 @@ config.json
 
 filesDebug
 
+jsonTypes/
+
 mailMessages.json
 
 mailUIDL.json

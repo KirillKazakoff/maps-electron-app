@@ -1,4 +1,4 @@
-import reportJson from '../../filesDebug/reportNew.json';
+import reportJson from './jsonTypes/reportNew.json';
 import { SSDInfoT } from '../../puppeteer/f16/parseF16/parseInfo';
 import { ProductionInputT } from '../../puppeteer/f16/parseF16/parseProdInput';
 import { ProductionOutputT } from '../../puppeteer/f16/parseF16/parseProdOutput';

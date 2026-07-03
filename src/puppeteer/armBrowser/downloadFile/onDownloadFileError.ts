@@ -23,8 +23,9 @@ export const onDownloadFileError = async (intervalId: any, e: any) => {
         }
     });
 
+    // специальная ошибка, при срабатывании которой браузер не закрывается, итерация продолжается
     if (e.message.includes('Отсутствует значение параметра')) {
-        console.log('No param found');
+        console.log('NO PARAM ERROR');
         return false;
     }
 
