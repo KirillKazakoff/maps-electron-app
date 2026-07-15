@@ -66,6 +66,7 @@ export const setOsmIpc = (powerIpc: PowerIpcT) => {
         readConfig();
         api.send.debugBackedn('vessel');
     });
+
     // F10
     ipcMain.on('sendF10', () => {
         readConfig();

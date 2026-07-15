@@ -4,10 +4,11 @@ import { SSDT } from '../../utils/types/f16';
 import { parseF16 } from './parseF16/parseF16';
 
 export const archiveToDB = () => {
-    const ROOT_DIR = 'C:\\Users\\admin\\Dropbox\\Семейная папка\\ССД расшиф v2\\Архив\\2024';
+    const ROOT_DIR =
+        'C:\\Users\\admin\\Dropbox\\Семейная папка\\БД\\ССД расшиф v2\\Архив\\2026';
     const f16Array: SSDT[][] = [];
 
-    function processDirectoryRecursive(dirPath: string) {
+    const processDirectoryRecursive = (dirPath: string) => {
         try {
             // Читаем содержимое текущей директории
             const items = fs.readdirSync(dirPath, { withFileTypes: true });
@@ -35,7 +36,7 @@ export const archiveToDB = () => {
         } catch (error) {
             console.error(`❌ Ошибка при обработке директории ${dirPath}:`, error);
         }
-    }
+    };
 
     processDirectoryRecursive(ROOT_DIR);
     console.log('✅ Обработка успешно завершена!');

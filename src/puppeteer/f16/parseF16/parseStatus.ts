@@ -45,7 +45,8 @@ export const parseStatus = (json: ReportF16T) => {
     }
 
     status.place = title.split(' - ')[1].split('°')[0];
-    status.placeId = +title.split(' - ')[0].split(/\r\n/).pop();
+    const placeID = title.split(' - ')[0].split(/\r\n/).pop() as any as number;
+    status.placeId = +placeID;
 
     // parse meteo in tablix5
     const tokens = {
