@@ -39,7 +39,7 @@ export const downloadF10Report = async (date: FormDateT, isFormDate: boolean) =>
             moveF10(currentDate.toFormat(format), isFormDate);
         } catch (e) {
             bot.log.botDated('F10 Report not downloaded, trying again');
-            await browser.clear(timers, true);
+            await browser.check(timers, true);
 
             await downloadF10Report(
                 {
@@ -55,5 +55,5 @@ export const downloadF10Report = async (date: FormDateT, isFormDate: boolean) =>
         currentDate = currentDate.plus({ day: 1 });
     }
 
-    await browser.clear(timers, false);
+    await browser.check(timers, false);
 };

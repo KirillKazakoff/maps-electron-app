@@ -12,7 +12,6 @@ export const downloadF16Report = async (date: FormDateT, vesselsArray: string[])
     let vessels = Array.from(new Set(vesselsArray));
 
     const recurseLoad = async () => {
-        const timers: NodeJS.Timeout[] = [];
         const loginStatus = await login(settings);
 
         let currentId = vessels[0];
@@ -28,21 +27,30 @@ export const downloadF16Report = async (date: FormDateT, vesselsArray: string[])
                 await downloadFile({
                     url: `https://mon.cfmc.ru/ReportViewer.aspx?Report=34&IsAdaptive=false&VesselShipId=${id}&StartDate=${date.start}&EndDate=${date.end}`,
                     docType: 'xml',
-                    timers,
-                    timeout: 200000,
+                    timers: browser.timers,
+                    timeout: 300000,
                 });
-            } catch (e) {
-                // if error_restart occurs while download file
+
+                await browser.check({ isError: false });
+            } catch (e: any) {
+                // throw next to osm catch unexpected errors
+                if (e.message !== 'error_restart') {
+                    throw e;
+                }
+
+                // if error_restart occurs while download file then restart browser
                 vessels = vessels.slice(vessels.indexOf(currentId));
                 bot.log.bot('F16 report not downloaded, restart ' + 'on vessel id ' + id);
 
-                await browser.clear(timers, true);
+                await browser.close();
+                await browser.check({ isError: true });
+
                 await recurseLoad();
                 return;
             }
         }
 
-        await browser.clear(timers, false);
+        await browser.close();
     };
 
     await recurseLoad();

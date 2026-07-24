@@ -3,7 +3,8 @@ import util from 'util';
 
 const execPromise = util.promisify(exec);
 
-const mainPath = 'C:\\Users\\admin\\Desktop\\Projects\\maps-electron\\src\\powershell\\vbs\\';
+const mainPath =
+    'C:\\Users\\admin\\Desktop\\Projects\\maps-electron-app\\src\\powershell\\vbs\\';
 
 export async function runVBS(scriptName: string) {
     console.log('Запуск обновления Excel...');

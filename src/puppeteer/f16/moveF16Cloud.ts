@@ -29,7 +29,7 @@ export const moveF16Cloud = (f16List: SSDT[][]) => {
             fs.unlinkSync(filePath);
         });
 
-        // // move ssd to icloud directory
+        // move ssd to cloud directory
         const { vessel_id, vessel_name } = ssd.info;
         const newPath = `${path}SSD_${formatedDate}_${vessel_name.toUpperCase()}_${vessel_id}.xml`;
 

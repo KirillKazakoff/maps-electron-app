@@ -6,7 +6,7 @@ const mainDir = isAdmin
 const serverPath = isAdmin ? 'C:\\Users\\admin' : 'C:\\users\\kirillkazakov';
 
 const downloadDir = isAdmin ? `${serverPath}\\Downloads` : `\\\\Mac\\Home\\Downloads`;
-const powershellDir = `${serverPath}\\Desktop\\Repo\\maps-electron\\src\\powershell\\`;
+const powershellDir = `${serverPath}\\Desktop\\Repo\\maps-electron-app\\src\\powershell\\`;
 const cloudDir = mainDir + '\\ССД расшиф v2';
 
 export const configUrl = mainDir + '\\Конфигурация\\config.json';

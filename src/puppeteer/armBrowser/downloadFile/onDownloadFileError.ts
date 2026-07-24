@@ -1,5 +1,4 @@
 import { bot } from '../../../bot/bot';
-import { browser } from '../../browser';
 
 export const onDownloadFileError = async (intervalId: any, e: any) => {
     clearInterval(intervalId);
@@ -14,8 +13,10 @@ export const onDownloadFileError = async (intervalId: any, e: any) => {
         'Requesting main frame too early!',
         'wait too much',
         'Navigation',
+        'ERR_CONNECTION_CLOSED',
     ];
 
+    // если ошибки из массива errorsRestart, то они обрабатываются в downloadF16Report
     errorsRestart.forEach((option) => {
         if (e.message.includes(option)) {
             bot.log.bot('RELOAD');
@@ -29,7 +30,6 @@ export const onDownloadFileError = async (intervalId: any, e: any) => {
         return false;
     }
 
-    // on unexpected error occur stop browser work + send log
-    bot.log.bot('Unexpected download file error: ' + e.message);
-    await browser.close();
+    // on unexpected error throw error further
+    throw e;
 };

@@ -5,7 +5,10 @@ const initTrap = (code: string) => ({ amount: 0, amountStr: '0', desc: code });
 type TrapT = ReturnType<typeof initTrap>;
 
 export const parseTrap = (json: ReportF16T) => {
-    const t = json.Subreport6[0].Report[0].Tablix8[0];
+    const subreport = json.Subreport6;
+    if (!subreport) return;
+
+    const t = subreport[0]?.Report[0]?.Tablix8[0];
     if (!t || typeof t === 'string') return null;
 
     const table = t.OPER_NUM_Collection[0].OPER_NUM;

@@ -13,16 +13,21 @@ type Params = {
 };
 
 export const downloadFile = async ({ url, timers, docType, page: pg, timeout }: Params) => {
-    if (!browser.instance) return null;
+    if (!browser.instance) {
+        throw new Error('no browser on download file');
+    }
 
-    let intervalId: null;
+    // eslint-disable-next-line @typescript-eslint/no-inferrable-types, prefer-const
+    let intervalId = null as unknown as NodeJS.Timeout;
+
     try {
         let page = pg;
 
-        if (!page) {
+        if (!page && url) {
             page = await browser.instance.newPage();
-            await page.goto(url);
+            await page.goto(url, { timeout: 100000 });
         }
+        if (!page) return;
 
         await waitReportLoad({ intervalId, browser, page, watchEl: 'span', timeout });
 

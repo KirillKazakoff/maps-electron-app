@@ -65,11 +65,15 @@ export async function login(settings: SettingsT) {
         }
 
         console.log('on ARM');
+        // if no error clear error counter
+        await browser.check({ isError: false });
         return page;
     } catch (e: any) {
         // relaunch on error
-        await browser.clear(null, true);
+        await browser.check({ isError: true });
         bot.log.bot('OSM Login Error: ' + e.message);
+
+        await browser.close();
         await login(settings);
 
         return false;

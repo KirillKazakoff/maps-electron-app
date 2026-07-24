@@ -5,7 +5,7 @@ import { modifyCoefficientSpecial } from './modifyCoefficientRoe';
 import { F16T, SSDT } from '../../../utils/types/f16';
 import xml2js from 'xml2js';
 
-export const parseF16 = (xml: Buffer, filePath: string) => {
+export const parseF16Item = (xml: Buffer, filePath: string) => {
     let parsedF16: SSDT[] = [];
 
     xml2js.parseString(xml, { mergeAttrs: true }, (err, report: F16T) => {
@@ -20,7 +20,7 @@ export const parseF16 = (xml: Buffer, filePath: string) => {
 
         const { SSD_DATE } = SSD_DATE_Collection[0];
 
-        // reduce and parse report
+        // reduce and parse report!
         parsedF16 = SSD_DATE.reduce<SSDT[]>((total, json) => {
             const output = parseProdOutput(json);
             const input = parseProdInput(json);

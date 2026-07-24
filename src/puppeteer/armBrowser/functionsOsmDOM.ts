@@ -4,7 +4,12 @@ export function checkLiNoValue() {
     if (!lis) return false;
 
     const res = Array.from(lis).find((li) => {
-        return li.textContent?.includes('Отсутствует значение параметра');
+        const isNoParam = li.textContent?.includes('Отсутствует значение параметра');
+        const isErrorProcess = li.textContent?.includes(
+            'Произошла ошибка при обработке отчета'
+        );
+
+        return isNoParam || isErrorProcess;
     });
 
     if (!res) return false;

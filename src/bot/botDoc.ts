@@ -44,28 +44,21 @@ export class BotDoc {
     }
 
     async pdf({ name: docName, type }: { name: string; type: SettingsT['type'] }) {
-        const path = 'C:\\Users\\admin\\Dropbox\\Семейная папка\\Модель данных\\Отчеты\\Бот\\';
-        const oldPath = path + docName + '.pdf';
+        const oldPath = `C:\\Users\\admin\\Dropbox\\Семейная папка\\БД\\Модель данных\\БД\\${docName}.pdf`;
 
-        let suffix = '';
-        if (type === 'quotes') suffix = 'по квотам';
-        if (type === 'vessel') suffix = 'по судам';
-        if (type === 'tech') suffix = 'технический';
-        if (type === 'fish') suffix = 'по минтаю сельди';
-        if (type === 'crab') suffix = 'по выпуску краба';
-
-        const documentPath = `${path}Отчет ${suffix} от ${getDateNow()}.pdf`;
+        const reportName = `${docName} от ${getDateNow()}.pdf`;
+        const newPath = `C:\\Users\\admin\\Dropbox\\Семейная папка\\БД\\Модель данных\\Отчеты\\Бот\\${reportName}`;
 
         // rename path report if pdf
         try {
-            fs.renameSync(oldPath, documentPath);
+            fs.renameSync(oldPath, newPath);
         } catch (e) {
-            botLog.bot(`Error on rename this doc path: ${documentPath}`);
+            botLog.bot(`Error on rename this doc path: ${newPath}`);
             return;
         }
 
         await timePromise(5000);
-        await this.doc({ sizeCheck: 85, path: documentPath, type });
+        await this.doc({ sizeCheck: 85, path: newPath, type });
     }
 
     async xlsx() {

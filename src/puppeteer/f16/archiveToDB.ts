@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { SSDT } from '../../utils/types/f16';
-import { parseF16 } from './parseF16/parseF16';
+import { parseF16Item } from './parseF16/parseF16Item';
 
 export const archiveToDB = () => {
     const ROOT_DIR =
@@ -23,7 +23,7 @@ export const archiveToDB = () => {
                     // may occur beated files, detect here
                     try {
                         const xml = fs.readFileSync(fullPath);
-                        const SSD = parseF16(xml, fullPath);
+                        const SSD = parseF16Item(xml, fullPath);
 
                         f16Array.push(SSD);
                     } catch (e) {

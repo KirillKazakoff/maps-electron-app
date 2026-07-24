@@ -19,7 +19,7 @@ export const addIpcListeners = () => {
         osmIpc.taskOsm = nodeCron.schedule('0 30 12 * * *', osmIpc.cbPlanner);
         osmIpc.taskCompany = nodeCron.schedule('0 10 9 * * *', osmIpc.sendF16CompanyPlanner);
         // powerIpc.taskRegistersMd = nodeCron.schedule('0 0 */4 * * *', powerIpc.plannerPA);
-        powerIpc.taskReestrMonday = nodeCron.schedule('28 12 * * 1', powerIpc.sendReestr);
-        powerIpc.taskReestrThursday = nodeCron.schedule('28 12 * * 4', powerIpc.sendReestr);
+        // powerIpc.taskReestrMonday = nodeCron.schedule('28 12 * * 1', powerIpc.sendReestr);
+        // powerIpc.taskReestrThursday = nodeCron.schedule('28 12 * * 4', powerIpc.sendReestr);
     }
 };

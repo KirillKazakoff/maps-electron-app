@@ -1,5 +1,4 @@
 import { ReportF16T } from '../../../utils/types/f16';
-import { Reserve } from '../../../api/models';
 
 export const parseReserve = (ssdJson: ReportF16T) => {
     const reserveJson = ssdJson.Tablix7[0].Details5_Collection[0].Details5;

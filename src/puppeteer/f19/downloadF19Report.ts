@@ -35,7 +35,7 @@ export const downloadF19Report = async (date: FormDateT, isUpdateConfig: boolean
                 });
             } catch (e) {
                 bot.log.bot('F19 Report not downloaded, trying again');
-                await browser.clear(timers, true);
+                await browser.check(timers, true);
                 await downloadF19Report(date, isUpdateConfig);
 
                 return;
@@ -51,7 +51,7 @@ export const downloadF19Report = async (date: FormDateT, isUpdateConfig: boolean
         currentDateTime = currentDateTime.plus({ month: 1 });
     }
 
-    await browser.clear(timers, false);
+    await browser.check(timers, false);
 
     operateF19(isUpdateConfig);
 };

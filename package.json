@@ -5,7 +5,7 @@
     "description": "My Electron application description",
     "main": ".webpack/main",
     "repository": {
-        "url": "https://github.com/KirillKazakoff/maps-electron"
+        "url": "https://github.com/KirillKazakoff/maps-electron-app"
     },
     "overrides": {
         "extract-zip": {
@@ -59,7 +59,7 @@
         "style-loader": "^3.0.0",
         "ts-loader": "^9.2.2",
         "ts-node": "^10.0.0",
-        "typescript": "~4.5.4"
+        "typescript": "^4.5.4"
     },
     "dependencies": {
         "@babel/cli": "^7.15.7",

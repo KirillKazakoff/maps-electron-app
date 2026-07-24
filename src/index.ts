@@ -2,11 +2,11 @@ import { app, BrowserWindow } from 'electron';
 import { setLoggingTrace } from './utils/log';
 import { updateElectronApp } from 'update-electron-app';
 import { addIpcListeners } from './ipc/ipc';
+import { bot } from './bot/bot';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
-// prettier-ignore
 if (require('electron-squirrel-startup')) {
     app.quit();
 }
@@ -26,14 +26,21 @@ export const createWindow = (): void => {
         show: false,
     });
 
+    mainWindow.webContents.openDevTools();
+
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
     addIpcListeners();
-    // addMailListener();
-    // botMail();
 
     setTimeout(() => mainWindow.showInactive(), 500);
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 };
 
 app.on('ready', createWindow);
+
+process.on('uncaughtException', (error) => {
+    bot.log.bot(error.message);
+
+    console.error('Main process error:', error);
+    // Optional: write error to a local file using the 'fs' module
+});

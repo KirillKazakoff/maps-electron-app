@@ -47,9 +47,10 @@ export const setOsmIpc = (powerIpc: PowerIpcT) => {
     ipcMain.on('sendF16Company', () => {
         sendF16CompanyPlanner();
     });
-    ipcMain.on('sendF16', (e, date: FormDateT) => {
+    ipcMain.on('sendF16', async (e, date: FormDateT) => {
         readConfig();
-        downloadF16Report(date, [...vessels.main, ...vessels.special]);
+        const f16Data = await downloadF16Report(date, [...vessels.main, ...vessels.special]);
+        api.send.ssdInfo(f16Data);
     });
     ipcMain.on('sendF16XML', () => {
         readConfig();
@@ -58,8 +59,8 @@ export const setOsmIpc = (powerIpc: PowerIpcT) => {
     });
     ipcMain.on('sendF16Backend', async () => {
         readConfig();
-        const f16Data = archiveToDB();
-        // const f16Data = parseF16List('debugSSD');
+        // const f16Data = archiveToDB();
+        const f16Data = parseF16List('debugSSD');
         api.send.ssdInfo(f16Data);
     });
     ipcMain.on('sendBackendDebug', async () => {
@@ -85,7 +86,12 @@ export const setOsmIpc = (powerIpc: PowerIpcT) => {
 
             const date = calcARMDateFromNow();
 
-            await downloadF16Report(date, [...vessels.main, ...vessels.special]);
+            const f16Data = await downloadF16Report(date, [
+                ...vessels.main,
+                ...vessels.special,
+            ]);
+            api.send.ssdInfo(f16Data);
+
             await downloadF10Report(calcARMDateNow(), false);
             await downloadF19Report(date, true);
 
@@ -98,6 +104,7 @@ export const setOsmIpc = (powerIpc: PowerIpcT) => {
         } catch (e: any) {
             console.error(e);
             bot.log.bot('UNEXPECTED ERROR in OSM api: ' + e.message);
+            bot.log.bot(e);
         }
     };
     ipcMain.on('sendManual', () => cbPlanner());

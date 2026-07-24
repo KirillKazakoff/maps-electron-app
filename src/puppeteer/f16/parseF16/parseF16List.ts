@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { parseF16 } from './parseF16';
+import { parseF16Item } from './parseF16Item';
 import { getDirPathes } from '../../fsModule/fsPathes';
 import { moveF16XmlDownloads } from '../moveF16XmlDownloads';
 import { SSDT } from '../../../utils/types/f16';
@@ -7,6 +7,7 @@ import { SSDT } from '../../../utils/types/f16';
 const pathes = getDirPathes();
 
 export const parseF16List = (path: keyof typeof pathes) => {
+    // move F16 to downloads folder
     moveF16XmlDownloads();
 
     const ssdDir = pathes[path];
@@ -23,7 +24,7 @@ export const parseF16List = (path: keyof typeof pathes) => {
         const filePath = `${ssdDir}${file.name}`;
         const xml = fs.readFileSync(filePath);
 
-        const SSD = parseF16(xml, filePath);
+        const SSD = parseF16Item(xml, filePath);
 
         // if new ssd is empty dont move to cloud
         if (!SSD || SSD.length === 0) {
