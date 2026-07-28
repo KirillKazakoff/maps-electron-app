@@ -15,7 +15,7 @@ export const OsmUI = observer(() => {
 
             <div className="rest-controllers rest-first-stage">
                 <ButtonsBlock>
-                    <ButtonAction id="sendF16XML">Переместить F16 ФС</ButtonAction>
+                    <ButtonAction id="sendF16XML">Переместить F16 в ФС (отладка)</ButtonAction>
                     <ButtonAction id="sendManual">F16 все суда</ButtonAction>
                     <ButtonAction id="sendF16Company">F16 суда компании</ButtonAction>
                 </ButtonsBlock>

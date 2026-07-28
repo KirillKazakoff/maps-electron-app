@@ -47,6 +47,5 @@ export const downloadFile = async ({ url, timers, docType, page: pg, timeout }: 
         timers.push(setTimeout(() => page.close(), 20000));
     } catch (e) {
         await onDownloadFileError(intervalId, e);
-        return false;
     }
 };

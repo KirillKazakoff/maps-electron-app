@@ -1,11 +1,12 @@
-import { SettingsT } from '../../utils/types/types';
+import { Page } from 'puppeteer';
 import { bot } from '../../bot/bot';
 import { timePromise } from '../../utils/time';
+import { SettingsT } from '../../utils/types/types';
 import { browser } from '../browser';
 
 // page click navigation works badly and needs manualy timeout set to wait on load page
 
-export async function login(settings: SettingsT) {
+export async function login(settings: SettingsT): Promise<Page> {
     try {
         await browser.launch();
         if (!browser.instance) return;
@@ -51,31 +52,33 @@ export async function login(settings: SettingsT) {
             // going to osm portal version service
             await page.click('button.btn-danger');
 
+            console.log('wait 15');
             await timePromise(15000);
 
             // navigate to cfcm tab
             await page.click('.icon-home.chart');
-            await timePromise(10000);
+            console.log('wait 20');
+            await timePromise(20000);
         } else {
             // going to cfcm portal version regular
+            console.log('wait 10');
             await timePromise(10000);
             await page.hover('.sub-navigation');
             await page.click('#id14');
-            await timePromise(12000);
+
+            console.log('wait 20');
+            await timePromise(20000);
         }
 
         console.log('on ARM');
-        // if no error clear error counter
-        await browser.check({ isError: false });
         return page;
     } catch (e: any) {
+        console.log('ERROR ON LOGIN OCCUR');
         // relaunch on error
-        await browser.check({ isError: true });
+        // await browser.check({ isError: true });
         bot.log.bot('OSM Login Error: ' + e.message);
 
-        await browser.close();
-        await login(settings);
-
-        return false;
+        await browser.close({ isError: true });
+        return await login(settings);
     }
 }
