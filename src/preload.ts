@@ -18,6 +18,7 @@ const electronApi = {
 
         //F10
         sendF10: () => ipcRenderer.send('sendF10'),
+        sendXMLF10: () => ipcRenderer.send('sendXMLF10'),
         sendF10Date: (date: FormDateT) => ipcRenderer.send('sendF10Date', date),
 
         // osmLoad

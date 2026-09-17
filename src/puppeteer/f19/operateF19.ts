@@ -1,92 +1,47 @@
-import xml2js from 'xml2js';
 import { getDirPathes } from '../fsModule/fsPathes';
-import fs from 'fs';
 import { vessels, rewriteConfig } from '../fsModule/readConfig';
 import { bot } from '../../bot/bot';
-import { getDateF19Report } from '../../utils/date';
-import { F19T } from '../../utils/types/f19';
+import { parseF19 } from './parseF19';
+import { processReports } from '../fsModule/processReports';
 
 const xmlPathes = getDirPathes();
 
-export const operateF19 = (isUpdateConfig: boolean) => {
-    const fileNames = fs.readdirSync(`${xmlPathes.downloads}`, {
-        withFileTypes: true,
-    });
+// search for f19 xlsx and xml files in downloads dir
+type SettingsT = { isUpdateConfig: boolean; date: string };
 
-    fileNames.forEach((file) => {
-        if (!file.name.includes('Ф19')) return;
-        const filePath = `${xmlPathes.downloads}\\${file.name}`;
+export const operateF19 = ({ isUpdateConfig, date }: SettingsT) => {
+    processReports({
+        formCode: 'Ф19',
+        getTargetConfig: ({ ext }) => {
+            const config = { targetDir: '', newFileName: '' };
 
-        // send xlsx report to cloud dir
-        if (file.name.includes('xlsx')) {
-            const fileName = getDateF19Report();
-            console.log(fileName);
-            const filePathNew = `${xmlPathes.f19}\\${fileName}.xlsx`;
+            if (ext === 'xlsx') {
+                config.newFileName = `${date}.xlsx`;
+                config.targetDir = xmlPathes.f19;
+            }
+            return config;
+        },
+        onSuccess: ({ filePath, ext }) => {
+            if (!isUpdateConfig) return;
+            if (ext !== 'xml') return;
 
-            fs.copyFileSync(filePath, filePathNew);
-            fs.unlinkSync(filePath);
+            // add new vessels to config
+            const newVessels = parseF19({ filePath });
+            const setVessels = Array.from(new Set(newVessels));
 
-            return;
-        }
-
-        if (!isUpdateConfig) return;
-
-        // add new vessels to config
-        const xml = fs.readFileSync(filePath);
-
-        const newVessels: string[] = [];
-        xml2js.parseString(xml, { mergeAttrs: true }, (err, res: F19T) => {
-            if (err) {
-                console.log(err);
-                return;
+            if (setVessels.length > 0) {
+                bot.log.bot('new vessels registered are ' + setVessels.join(' '));
             }
 
-            const details = res.Report.Tablix1[0].Details_Collection[0].Details;
+            // fsWrite new vessels
+            vessels.main.push(...setVessels);
 
-            if (!details) return null;
-
-            details.forEach(({ VES2: vessel, FISH: product }) => {
-                const id = vessel[0].split(/[()]/)[1];
-                const isEqualRecord = vessels.main.some((v) => v === id);
-                const isCrab = product && product[0].includes('краб');
-                const isException = vessels.exception.some((v) => v === id);
-
-                if (!product) return;
-
-                if (!isEqualRecord && !isException && isCrab) {
-                    newVessels.push(id);
-                }
-
-                // cut if exeption already in vessel list
-                if (isException) {
-                    const index = vessels.main.indexOf(id);
-                    if (index === -1) return;
-
-                    vessels.main.splice(index, 1);
-                }
-            });
-        });
-
-        const setVessels = Array.from(new Set(newVessels));
-
-        if (setVessels.length > 0) {
-            bot.log.bot('new vessels registered are ' + setVessels.join(' '));
-        }
-
-        // fsWrite new vessels
-        vessels.main.push(...setVessels);
-
-        // removeDublicates
-        try {
-            const vessels2 = Array.from(new Set(vessels.main));
-            console.log(vessels2);
-            vessels.main = [...vessels2];
+            // removeDublicates
+            const vesselList = Array.from(new Set(vessels.main));
+            vessels.main = [...vesselList];
 
             rewriteConfig();
-            fs.unlinkSync(filePath);
-        } catch (e) {
-            console.log(e);
-        }
+        },
     });
 
     bot.log.botDated(`F19 report xml xlsx loaded`);

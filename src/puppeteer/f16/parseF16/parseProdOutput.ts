@@ -9,7 +9,7 @@ export type ProductionOutputT = {
     coefficient: number;
 };
 
-// Словарь для нормализации/упрощения сложных названий продукции в более читаемые
+// Словарь для упрощения сложных названий продукции в более читаемые
 const prodReplaceDictionary = {
     'икра минт яст мор зрел': 'икра минт ST',
     'икра минт яст мор пищ нестанд': 'икра минт',
@@ -32,7 +32,7 @@ const prodNameReplace = (name: string) => {
 };
 
 /**
- * Парсер сырых данных таблицы в массив объектов ProductionOutputT
+ * Парсер входящих данных таблицы в массив объектов ProductionOutputT
  * Принимает строку (для валидации) или массив объектов с массивами строк внутри
  */
 const parseTable = (table: string | { [key: string]: string[] }[]) => {
@@ -54,10 +54,10 @@ const parseTable = (table: string | { [key: string]: string[] }[]) => {
         let sort = nameArr[nameArr.length - 1];
         if (!sort) sort = '';
 
-        // Собираем название обратно в строку (фактически эквивалентно исходному name)
+        // Собираем название обратно в строку
         const nameParsed = nameArr.join(' ');
 
-        // Формируем чистый валидный объект продукции
+        // Формируем объект продукции
         const obj: ProductionOutputT = {
             idProduct: parsedID,
             name: prodNameReplace(nameParsed),
@@ -72,11 +72,11 @@ const parseTable = (table: string | { [key: string]: string[] }[]) => {
 };
 
 /**
- * Главный экспортируемый парсер отчета производства SSD JSON (формат F16)
- * Разделяет данные на текущие показатели и общие показатели по борту судна
+ * Главный парсер отчета F16
+ * Разделяет данные на суточные показатели и итоговые по борту судна
  */
 export const parseProdOutput = (ssdJson: ReportF16T) => {
-    // Безопасно извлекаем коллекцию текущих деталей из Tablix9 (может быть undefined)
+    // Безопасно извлекаем коллекцию (данные по суткам) из Tablix9 (может быть undefined)
     const detailsCurrentCollection = ssdJson.Tablix9[0]?.Details7_Collection[0];
     const detailsTotal = ssdJson.Tablix11[0].Details9_Collection[0].Details9;
 
@@ -88,7 +88,7 @@ export const parseProdOutput = (ssdJson: ReportF16T) => {
     // Если есть данные по борту, парсим их в массив board
     if (detailsTotal) output.board = parseTable(detailsTotal);
 
-    // Проверяем, что коллекция текущих данных существует и является объектом
+    // Проверяем, что коллекция с суточными данными существует и является объектом
     const isCurrent = typeof detailsCurrentCollection === 'object' && detailsCurrentCollection;
 
     if (isCurrent) {

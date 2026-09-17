@@ -22,7 +22,6 @@ export const getDirPathes = () => {
         ssd: cloudDir + '\\SSD\\',
         ssdArchive: cloudDir + '\\Архив\\2026\\',
         quotes: mainDir + '\\КВОТЫ ССД\\Квоты РФ\\',
-        quotesFormDate: mainDir + '\\КВОТЫ ССД\\Квоты РФ Выгрузка\\',
         f19: mainDir + '\\ДВ БД\\Выгрузки\\Вылов (форма Ф19)\\',
     };
 };

@@ -1,8 +1,12 @@
 import { Coordinates, Vessel } from './models';
 import axios from 'axios';
 import { SSDT } from '../utils/types/f16';
+import { isDev } from '../puppeteer/fsModule/isDev';
 
-const baseUrl = 'http://127.0.0.1:9092';
+const port = isDev() ? '3001' : '80';
+
+const baseUrl = `http://127.0.0.1:${port}`;
+console.log(baseUrl);
 
 const updateZones = async (data: unknown) => {
     await axios.post(`${baseUrl}/zones`, data);

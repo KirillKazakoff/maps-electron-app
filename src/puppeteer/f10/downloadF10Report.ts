@@ -36,7 +36,7 @@ export const downloadF10Report = async (date: FormDateT, isFormDate: boolean) =>
                 timeout: 600000,
             });
 
-            moveF10(currentDate.toFormat(format), isFormDate);
+            moveF10(currentDate.toFormat(format));
         } catch (e) {
             bot.log.botDated('F10 Report not downloaded, trying again');
             await browser.close({ isError: true });

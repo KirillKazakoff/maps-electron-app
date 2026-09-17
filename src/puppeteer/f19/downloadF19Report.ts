@@ -22,13 +22,13 @@ export const downloadF19Report = async (date: FormDateT, isUpdateConfig: boolean
     console.log(isFinishLoad);
 
     while (!isFinishLoad) {
-        const endMonth = currentDateTime.endOf('month').toFormat('dd-MM-yyyy');
-        const startMonth = currentDateTime.startOf('month').toFormat('dd-MM-yyyy');
+        const endOfMonth = currentDateTime.endOf('month').toFormat('dd-MM-yyyy');
+        const startOfMonth = currentDateTime.startOf('month').toFormat('dd-MM-yyyy');
 
         const downloadF19 = async (docType: 'xml' | 'xlsx') => {
             try {
                 await downloadFile({
-                    url: `https://mon.cfmc.ru/ReportViewer.aspx?Report=5&IsAdaptive=false&VesselListId=1352447&StartDate=${startMonth}&EndDate=${endMonth}`,
+                    url: `https://mon.cfmc.ru/ReportViewer.aspx?Report=5&IsAdaptive=false&VesselListId=1352447&StartDate=${startOfMonth}&EndDate=${endOfMonth}`,
                     docType,
                     timers,
                     timeout: 600000,
@@ -47,11 +47,12 @@ export const downloadF19Report = async (date: FormDateT, isUpdateConfig: boolean
 
         await timePromise(30000);
 
+        // parse + moveF19
+        operateF19({ isUpdateConfig, date: currentDateTime.toFormat('yyyy.MM') });
+        // load next month
         isFinishLoad = currentDateTime.endOf('month').equals(end.endOf('month'));
         currentDateTime = currentDateTime.plus({ month: 1 });
     }
 
     await browser.close({ isError: false });
-
-    operateF19(isUpdateConfig);
 };

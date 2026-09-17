@@ -12,7 +12,6 @@ export async function login(settings: SettingsT): Promise<Page> {
         if (!browser.instance) return;
 
         const page = await browser.instance.newPage();
-        // page.setDefaultNavigationTimeout(0);
 
         // first navigate osm login
         await page.goto('https://osm.gov.ru/portal/login', { timeout: 80000 });

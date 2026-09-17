@@ -22,6 +22,7 @@ export const OsmUI = observer(() => {
                 <ButtonsBlock>
                     <ButtonAction id="sendXMLF19">Переместить F19 ФС</ButtonAction>
                     <ButtonAction id="sendF19">Загрузить отчет F19</ButtonAction>
+                    <ButtonAction id="sendXMLF10">Переместить F10 ФС</ButtonAction>
                     <ButtonAction id="sendF10">Загрузить отчет F10</ButtonAction>
                 </ButtonsBlock>
                 <ButtonsBlock>

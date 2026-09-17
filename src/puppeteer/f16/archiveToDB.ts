@@ -4,20 +4,19 @@ import { SSDT } from '../../utils/types/f16';
 import { parseF16Item } from './parseF16/parseF16Item';
 
 export const archiveToDB = () => {
-    const ROOT_DIR =
-        'C:\\Users\\admin\\Dropbox\\Семейная папка\\БД\\ССД расшиф v2\\Архив\\2026';
+    const ROOT_DIR = 'C:\\Users\\admin\\Dropbox\\Семейная папка\\БД\\ССД расшиф v2\\Архив\\';
     const f16Array: SSDT[][] = [];
 
     const processDirectoryRecursive = (dirPath: string) => {
         try {
-            // Читаем содержимое текущей директории
+            // read current dir
             const items = fs.readdirSync(dirPath, { withFileTypes: true });
 
             for (const item of items) {
                 const fullPath = path.join(dirPath, item.name);
 
                 if (item.isDirectory()) {
-                    // Если это папка -> заходим внутрь (рекурсия)
+                    // if item is dir go recurse
                     processDirectoryRecursive(fullPath);
                 } else if (item.isFile()) {
                     // may occur beated files, detect here
@@ -41,6 +40,5 @@ export const archiveToDB = () => {
     processDirectoryRecursive(ROOT_DIR);
     console.log('✅ Обработка успешно завершена!');
 
-    // console.log(f16Array);
     return f16Array;
 };

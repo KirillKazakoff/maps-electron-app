@@ -6,6 +6,29 @@ type TextT = string | number;
 type LogT = { id: number; text: TextT; options?: TelegramBot.SendMessageOptions };
 const { chat: chat, api } = setup;
 
+// Функция для разбивки текста на массив строк
+function splitMessage(text: string, maxLength = 4000) {
+    const chunks = [];
+    let currentChunk = '';
+
+    // Разделяем по строкам, чтобы не рвать слова посередине
+    const lines = text.split('\n');
+
+    for (const line of lines) {
+        if ((currentChunk + line).length > maxLength) {
+            chunks.push(currentChunk);
+            currentChunk = '';
+        }
+        currentChunk += line + '\n';
+    }
+
+    if (currentChunk.trim()) {
+        chunks.push(currentChunk);
+    }
+
+    return chunks;
+}
+
 export class BotLog {
     log(log: LogT) {
         api.sendMessage(log.id, log.text.toString(), {
@@ -14,7 +37,7 @@ export class BotLog {
         });
     }
 
-    reports(text: TextT) {
+    reports(text: string) {
         this.log({ text, ...chat.reports });
     }
     ovedDocs(text: TextT) {
