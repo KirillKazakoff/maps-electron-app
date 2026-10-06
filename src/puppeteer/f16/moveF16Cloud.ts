@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon';
 import { getDirPathes } from '../fsModule/fsPathes';
 import fs from 'fs';
 import { SSDT } from '../../utils/types/f16';
@@ -10,9 +9,6 @@ export const moveF16Cloud = (f16List: SSDT[][]) => {
         const pathes = getDirPathes();
         const path = pathes.ssd;
         const ssd = f16[f16.length - 1];
-
-        const dateTime = DateTime.fromFormat(ssd.info.date, 'dd.MM.yyyy');
-        const formatedDate = dateTime.toFormat('yyyy-MM-dd');
 
         const cloudSSDNames = fs.readdirSync(`${getDirPathes().ssd}`, {
             withFileTypes: true,
@@ -31,7 +27,7 @@ export const moveF16Cloud = (f16List: SSDT[][]) => {
 
         // move ssd to cloud directory
         const { vessel_id, vessel_name } = ssd.info;
-        const newPath = `${path}SSD_${formatedDate}_${vessel_name.toUpperCase()}_${vessel_id}.xml`;
+        const newPath = `${path}SSD_${ssd.info.date}_${vessel_name.toUpperCase()}_${vessel_id}.xml`;
 
         fs.copyFileSync(oldPath, newPath);
         fs.unlinkSync(oldPath);

@@ -6,6 +6,7 @@ import { parseF16List } from './parseF16/parseF16List';
 import { bot } from '../../bot/bot';
 import { settings } from '../fsModule/readConfig';
 import { moveF16Cloud } from './moveF16Cloud';
+import { timePromise } from '../../utils/time';
 
 export const downloadF16Report = async (date: FormDateT, vesselsArray: string[]) => {
     // close any connections in case if prev dont exit for any reason
@@ -54,6 +55,7 @@ export const downloadF16Report = async (date: FormDateT, vesselsArray: string[])
             }
         }
 
+        await timePromise(15000);
         // close browser + refresh error count
         await browser.close({ isError: false });
     };

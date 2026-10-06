@@ -16,6 +16,7 @@ const ping = async () => {
     return res;
 };
 const sendSSDInfo = async (data: SSDT[][]) => {
+    console.log(baseUrl);
     try {
         await axios.post(`${baseUrl}/ssd`, data);
     } catch (e: any) {

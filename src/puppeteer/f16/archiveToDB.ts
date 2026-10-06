@@ -4,9 +4,10 @@ import { SSDT } from '../../utils/types/f16';
 import { parseF16Item } from './parseF16/parseF16Item';
 
 export const archiveToDB = () => {
-    const ROOT_DIR = 'C:\\Users\\admin\\Dropbox\\Семейная папка\\БД\\ССД расшиф v2\\Архив\\';
+    const ROOT_DIR = 'C:\\Users\\admin\\Dropbox\\Семейная папка\\БД\\ССД расшиф v2\\Архив';
     const f16Array: SSDT[][] = [];
 
+    console.log('here');
     const processDirectoryRecursive = (dirPath: string) => {
         try {
             // read current dir

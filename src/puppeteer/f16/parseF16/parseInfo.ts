@@ -20,9 +20,14 @@ export const parseInfo = (json: ReportF16T) => {
     const dateNoDot = date.replaceAll('.', '');
     const dt = DateTime.fromFormat(dateNoDot, 'ddMMyyyy');
     const dtReversed = dt.toFormat('yyyyMMdd');
+    const dateFormated = DateTime.fromFormat(dtReversed, 'yyyyMMdd').toFormat('yyyy-MM-dd');
     const id = +`${dtReversed}${vessel_id}`;
 
-    console.log(id);
+    const status = parseStatus(json);
+    const { eta } = status.destination;
+    status.destination.eta = eta
+        ? DateTime.fromFormat(eta, 'dd.MM.yyyy').toFormat('yyyy-MM-dd')
+        : eta;
 
     return {
         id,
@@ -33,11 +38,11 @@ export const parseInfo = (json: ReportF16T) => {
         isTransport: titleSpaced[9] === 'ТР',
         trapData: parseTrap(json),
         isOutdated: dateYesterday !== date,
-        status: parseStatus(json),
+        status,
         coordinates,
         vessel_id,
         company_id,
-        date,
+        date: dateFormated,
     };
 };
 
