@@ -15,10 +15,10 @@ const ping = async () => {
     const res = await axios.get(`${baseUrl}/ping`);
     return res;
 };
-const sendSSDInfo = async (data: SSDT[][]) => {
+const sendSSDInfo = async (data: SSDT[][], isArchive = false) => {
     console.log(baseUrl);
     try {
-        await axios.post(`${baseUrl}/ssd`, data);
+        await axios.post(`${baseUrl}/ssd?disableTriggers=${isArchive}`, data);
     } catch (e: any) {
         console.log(e.message);
     }

@@ -26,8 +26,8 @@ export const OsmUI = observer(() => {
                     <ButtonAction id="sendF10">Загрузить отчет F10</ButtonAction>
                 </ButtonsBlock>
                 <ButtonsBlock>
-                    <ButtonAction id="sendF16Backend">Отправить F16 в БД</ButtonAction>
-                    <ButtonAction id="sendBackendDebug">Отладка сервер</ButtonAction>
+                    <ButtonAction id="sendF16Backend">Отправить F16 в БД Архив</ButtonAction>
+                    <ButtonAction id="sendBackendDebug">Отладка F16 БД</ButtonAction>
                 </ButtonsBlock>
                 <ButtonsBlock isLast>
                     <ButtonAction id="sendManual">Обновить промысловый отчет</ButtonAction>

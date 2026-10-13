@@ -63,13 +63,13 @@ export const setOsmIpc = (powerIpc: PowerIpcT) => {
     });
     ipcMain.on('sendF16Backend', async () => {
         readConfig();
-        // const f16Data = archiveToDB();
-        const f16Data = parseF16List('debugSSD');
-        api.send.ssdInfo(f16Data);
+        const f16Data = archiveToDB();
+        api.send.ssdInfo(f16Data, true);
     });
     ipcMain.on('sendBackendDebug', async () => {
         readConfig();
-        api.send.debugBackedn('vessel');
+        const f16Data = parseF16List('debugSSD');
+        api.send.ssdInfo(f16Data);
     });
 
     // F10
