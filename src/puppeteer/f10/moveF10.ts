@@ -8,7 +8,7 @@ export const moveF10 = (date: string) => {
     processReports({
         formCode: 'Ф10',
         getTargetConfig: () => {
-            return { newFileName: date, targetDir: xmlPathes.quotes };
+            return { newFileName: `${date}.xlsx`, targetDir: xmlPathes.quotes };
         },
         onSuccess: () => bot.log.bot(`F10 quotes report ${date} loaded`),
     });

@@ -37,11 +37,13 @@ export const processReports = ({
 
     files.forEach((file: fs.Dirent) => {
         if (!file.isFile() || !file.name.includes(formCode)) return;
-        const extension = file.name.match(/\.([^.]+)$/)?.[1];
+        const extension = file.name.match(/\.([^.]+)$/)?.[1] as string;
+        console.log(extension);
 
         const filePath = path.join(xmlPathes.downloads, file.name);
         const config = getTargetConfig({ fileName: file.name, ext: extension });
 
+        if (!config) return;
         if (!config.targetDir) return;
 
         const { targetDir, newFileName } = config;

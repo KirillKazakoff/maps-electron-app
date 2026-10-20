@@ -4,7 +4,7 @@ import { login } from '../armBrowser/login';
 import { downloadFile } from '../armBrowser/downloadFile/downloadFile';
 import { FormDateT } from '../../UI/stores/settingsStore';
 import { bot } from '../../bot/bot';
-import { operateF19 } from './operateF19';
+import { moveF19 } from './moveF19';
 import { timePromise } from '../../utils/time';
 import { getDateObj } from '../../UI/logic/getDate';
 
@@ -48,7 +48,8 @@ export const downloadF19Report = async (date: FormDateT, isUpdateConfig: boolean
         await timePromise(30000);
 
         // parse + moveF19
-        operateF19({ isUpdateConfig, date: currentDateTime.toFormat('yyyy.MM') });
+        moveF19({ isUpdateConfig, date: currentDateTime.toFormat('yyyy.MM') });
+
         // load next month
         isFinishLoad = currentDateTime.endOf('month').equals(end.endOf('month'));
         currentDateTime = currentDateTime.plus({ month: 1 });

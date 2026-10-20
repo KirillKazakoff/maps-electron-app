@@ -8,7 +8,7 @@ import { downloadF16Report } from '../puppeteer/f16/downloadF16Report';
 import { parseF16List } from '../puppeteer/f16/parseF16/parseF16List';
 import { sendF16InfoBot } from '../puppeteer/f16/sendF16InfoBot';
 import { downloadF19Report } from '../puppeteer/f19/downloadF19Report';
-import { operateF19 } from '../puppeteer/f19/operateF19';
+import { moveF19 } from '../puppeteer/f19/moveF19';
 import { readConfig, vessels } from '../puppeteer/fsModule/readConfig';
 import nodeCron from 'node-cron';
 import type { PowerIpcT } from './setPowerAUIpc';
@@ -25,7 +25,7 @@ export const setOsmIpc = (powerIpc: PowerIpcT) => {
     });
     ipcMain.on('sendXMLF19', () => {
         readConfig();
-        operateF19({ isUpdateConfig: true, date: getDateF19Report().now });
+        moveF19({ isUpdateConfig: true, date: getDateF19Report().now });
     });
     ipcMain.on('sendF19Date', (e, date: FormDateT) => {
         readConfig();
@@ -44,6 +44,7 @@ export const setOsmIpc = (powerIpc: PowerIpcT) => {
         ]);
 
         sendF16InfoBot(f16Data);
+        api.send.ssdInfo(f16Data);
         bot.log.bot('manual download vessel company finished');
     };
 
