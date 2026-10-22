@@ -16,6 +16,7 @@ export const parseInfo = (json: ReportF16T) => {
     const dateYesterday = DateTime.now().minus({ day: 1 }).toFormat('dd.MM.yyyy');
     const vessel_id = title.split(rgBracket)[1];
     const company_id = title.match(/(?<=___\/ [^(]*\()\d+(?=\))/)?.[0];
+    const vessel_composite_id = vessel_id + '-' + company_id;
 
     const dateNoDot = date.replaceAll('.', '');
     const dt = DateTime.fromFormat(dateNoDot, 'ddMMyyyy');
@@ -41,6 +42,7 @@ export const parseInfo = (json: ReportF16T) => {
         status,
         coordinates,
         vessel_id,
+        vessel_composite_id,
         company_id,
         date: dateFormated,
     };

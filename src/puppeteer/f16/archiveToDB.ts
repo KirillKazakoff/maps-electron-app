@@ -7,7 +7,7 @@ export const archiveToDB = () => {
     const ROOT_DIR = 'C:\\Users\\admin\\Dropbox\\Семейная папка\\БД\\ССД расшиф v2\\Архив';
     const f16Array: SSDT[][] = [];
 
-    console.log('here');
+    console.log('Archive procedure start');
     const processDirectoryRecursive = (dirPath: string) => {
         try {
             // read current dir
